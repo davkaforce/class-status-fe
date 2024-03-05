@@ -8,7 +8,9 @@ export default function Home() {
   console.log(col1, col2, col3);
   useEffect(() => {
     async function fet() {
-      const res = await fetch("https://class-status-be.vercel.app/students");
+      const res = await fetch(
+        "https://class-status-be.vercel.app/api/students"
+      );
       const data = await res.json();
       console.log(data.students);
       setStudent(data.students);
@@ -20,17 +22,20 @@ export default function Home() {
     if (user.state == "Done") changeColor = "bg-green-500";
     if (user.state == "Processing") changeColor = "bg-yellow-500";
     if (user.state == "Help") changeColor = "bg-red-500";
-    const res = await fetch("https://class-status-be.vercel.app/changeState", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: user.id,
-        state: user.state,
-        changeColor: changeColor,
-      }),
-    });
+    const res = await fetch(
+      "https://class-status-be.vercel.app/api/changeState",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: user.id,
+          state: user.state,
+          changeColor: changeColor,
+        }),
+      }
+    );
     const data = await res.json();
     console.log(data);
     setStudent(data.users);
